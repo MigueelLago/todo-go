@@ -55,3 +55,33 @@ func (h *TaskHandler) CreateTask(ctx *gin.Context) {
 	h.DB.Create(&t)
 	ctx.JSON(http.StatusCreated, gin.H{"data": t})
 }
+
+func (h *TaskHandler) UpdateTask(c *gin.Context) {
+	var t task.Task
+	id := c.Param("id")
+	if err := h.DB.First(&t, id).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Task não encontrada"})
+		return
+	}
+
+	if err := c.ShouldBindJSON(&t); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	h.DB.Save(&t)
+	c.JSON(http.StatusOK, gin.H{"data": t})
+}
+
+func (h *TaskHandler) CompleteTask(c *gin.Context) {
+	var t task.Task
+	id := c.Param("id")
+	if err := h.DB.First(&t, id).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Task não encontrada"})
+		return
+	}
+
+	t.Done = true
+	h.DB.Save(&t)
+	c.JSON(http.StatusOK, gin.H{"message": "Task marcada como concluída"})
+}

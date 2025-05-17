@@ -16,6 +16,8 @@ func SetupRoutes(db *gorm.DB) *gin.Engine {
 		tasksRoutes.POST("/", taskHandler.CreateTask)
 		tasksRoutes.GET("/:id", taskHandler.GetTaskByID)
 		tasksRoutes.DELETE("/:id", taskHandler.DeleteTask)
+		tasksRoutes.PUT("/:id", taskHandler.UpdateTask)
+		tasksRoutes.PUT("/:id/complete", taskHandler.CompleteTask)
 	}
 	return router
 }

@@ -2,6 +2,7 @@ package config
 
 import (
 	"log"
+	"os"
 
 	"github.com/MigueelLago/todo-go/internal/domain/task"
 	"gorm.io/driver/sqlite"
@@ -10,7 +11,11 @@ import (
 )
 
 func InitDB() *gorm.DB {
-	db, err := gorm.Open(sqlite.Open("tasks.db"), &gorm.Config{})
+	dbName := os.Getenv("DB_NAME")
+	if dbName == "" {
+		dbName = "tasks.db"
+	}
+	db, err := gorm.Open(sqlite.Open(dbName), &gorm.Config{})
 	if err != nil {
 		log.Fatal("Erro ao conectar ao banco de dados")
 	}

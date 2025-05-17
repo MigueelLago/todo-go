@@ -1,0 +1,108 @@
+# 📋 ToDo API - Go + Gin + GORM
+
+API simples para gerenciamento de tarefas (ToDo), desenvolvida em Go com Gin e GORM.
+
+## ✨ Funcionalidades
+
+- ✅ Criar uma nova tarefa
+- 📄 Listar todas as tarefas
+- 🔍 Buscar tarefa por ID
+- ❌ Deletar tarefa
+- ✔️ Marcar tarefa como concluída
+
+---
+
+## 🚀 Tecnologias
+
+- [Go](https://golang.org)
+- [Gin](https://gin-gonic.com)
+- [GORM](https://gorm.io)
+- [SQLite](https://www.sqlite.org)
+- [godotenv](https://github.com/joho/godotenv)
+
+---
+
+## 📦 Instalação e uso
+
+```bash
+# Clone o repositório
+git clone git@gitClassHub:MigueelLago/todo-go.git
+cd todo-go
+
+# Instale as dependências
+go mod tidy
+
+# Rode o projeto
+go run cmd/main.go
+```
+
+A API estará disponível em: `http://localhost:3000`
+
+---
+
+## 🛠 Endpoints
+
+### Criar tarefa
+
+`POST /tasks`
+
+```json
+{
+  "title": "Estudar Go",
+  "description": "Completar o projeto 1",
+  "done": false
+}
+```
+
+---
+
+### Listar tarefas
+
+`GET /tasks`
+
+---
+
+### Buscar tarefa por ID
+
+`GET /tasks/:id`
+
+---
+
+### Deletar tarefa
+
+`DELETE /tasks/:id`
+
+---
+
+### Marcar tarefa como concluída
+
+`PATCH /tasks/:id/complete`
+
+---
+
+## 📂 Estrutura de pastas
+
+```
+cmd/                      # main.go
+internal/
+├── config/               # conexão com banco
+├── domain/task/          # entidade e interface do repositório
+├── application/task/     # (futuro) regras de negócio / DTOs
+├── infrastructure/       # repositórios com GORM
+├── interfaces/http/      # handlers e rotas
+```
+
+---
+
+## 🔐 Variáveis de ambiente (.env)
+
+```env
+PORT=3000
+DB_NAME=tasks.db
+```
+
+---
+
+## 🧑‍💻 Autor
+
+**Miguel Lago** — [github.com/MigueelLago](https://github.com/MigueelLago)

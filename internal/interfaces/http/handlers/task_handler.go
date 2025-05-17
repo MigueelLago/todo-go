@@ -24,6 +24,16 @@ func (h *TaskHandler) GetTasks(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": tasks})
 }
 
+func (h *TaskHandler) GetTaskByID(c *gin.Context) {
+	var t task.Task
+	id := c.Param("id")
+	if err := h.DB.First(&t, id).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Task não encontrada"})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": t})
+}
+
 func (h *TaskHandler) CreateTask(ctx *gin.Context) {
 	var t task.Task
 	if err := ctx.ShouldBindJSON(&t); err != nil {
@@ -33,5 +43,4 @@ func (h *TaskHandler) CreateTask(ctx *gin.Context) {
 
 	h.DB.Create(&t)
 	ctx.JSON(http.StatusCreated, gin.H{"data": t})
-
 }

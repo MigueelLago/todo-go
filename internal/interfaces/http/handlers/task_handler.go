@@ -34,6 +34,17 @@ func (h *TaskHandler) GetTaskByID(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": t})
 }
 
+func (h *TaskHandler) DeleteTask(c *gin.Context) {
+	var t task.Task
+	id := c.Param("id")
+	if err := h.DB.First(&t, id).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Task não encontrada"})
+		return
+	}
+	h.DB.Delete(&t)
+	c.JSON(http.StatusOK, gin.H{"message": "Task deletada com sucesso"})
+}
+
 func (h *TaskHandler) CreateTask(ctx *gin.Context) {
 	var t task.Task
 	if err := ctx.ShouldBindJSON(&t); err != nil {
